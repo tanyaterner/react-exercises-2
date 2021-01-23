@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Marker.scss';
+import Highlighter from "react-highlight-words";
 
 function Marker() {
 
@@ -9,6 +10,11 @@ function Marker() {
 		"Third item",
 		"Fourth special item",
 	]);
+	const [input, setInput] = useState("");
+
+	function handleInput(e){
+		setInput(e.target.value)
+	}
 
 	return (
 		<div className="Marker">
@@ -19,9 +25,18 @@ function Marker() {
 				Apply the marker for <u>all items</u>.
 			</p>
 
-			<input type="text" placeholder="Text to marker..." />
+			<input type="text" onChange={handleInput}  placeholder="Text to marker..." />
 			<ul>
-				{ /* The list should be here */ }
+				{items.map((name ,index ) => {
+					return <li key={index}>{
+						<Highlighter
+						highlightClassName="YourHighlightClass"
+						searchWords={[input]}
+						autoEscape={true}
+						textToHighlight={name}
+					/>
+					}</li>
+				})}
 			</ul>
 		</div>
 	)

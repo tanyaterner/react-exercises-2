@@ -1,7 +1,18 @@
-import React from 'react';
+import React, {useState, isNan} from 'react';
 import './RealNumber.scss';
 
 function RealNumber() {
+
+	const [isHiden ,setHiden]= useState(false)
+
+	function isNumeric(n) {
+		return !isNaN(parseFloat(n)) && isFinite(n);
+	}
+
+	function handleInput(event) {
+		setHiden(isNumeric(event.target.value) === false);
+	}
+
 	return (
 		<div className="RealNumber">
 			<p>
@@ -11,8 +22,8 @@ function RealNumber() {
 				"A13" - <span className="value--invalid">invalid</span>
 			</p>
 
-			<input type="text" className="text-box" />
-			<button>Submit</button>
+			<input type="text" onChange={handleInput}  className="text-box" />
+			<button hidden={isHiden}>Submit</button>
 		</div>
 	)
 }
